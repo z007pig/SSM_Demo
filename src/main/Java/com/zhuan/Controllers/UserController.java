@@ -1,10 +1,11 @@
 package com.zhuan.Controllers;
 
-import Entity.Student;
+import com.zhuan.Pojo.Result;
+import com.zhuan.Pojo.User;
 import com.zhuan.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,15 +14,46 @@ import java.util.List;
  * @author zhuan
  */
 @RestController
-@RequestMapping("/api/User")
+@RequestMapping("/zhuan/User")
 public class UserController {
     @Autowired
-    private IUserService service;
+    private IUserService iUserService;
 
-    @GetMapping()
-    public String Get() {
-        List<Student> students = service.selectByCondition(new Student());
-        String jsonResult = com.alibaba.fastjson.JSON.toJSONString(students);
-        return jsonResult;
+    @RequestMapping(value = "/GetUserList.do")
+    public List<User> GetUserList(
+            @RequestParam(value = "page",required = false, defaultValue = "1") int page,
+            @RequestParam(value = "rows", required = false, defaultValue = "20") int rows) {
+            /**
+             *
+             * 功能描述: 查询用户列表
+             *
+             * @param: [page, rows]
+             * @return: java.util.List<User>
+             * @auther: zhuan
+             * @date: 2018/11/3 18:11
+             */
+        return iUserService.selectAll(page,rows);
+    }
+
+
+    @RequestMapping(value = "/AddUser.do")
+    public Result addUser(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "phone") String phone,
+            @RequestParam(value = "idCard") String idCard,
+            @RequestParam(value = "email") String email
+    ){
+        /**
+         *
+         * 功能描述: 
+         *
+         * @param: [name, phone, idCard, email]
+         * @return: void
+         * @auther: zhuan
+         * @date: 2018/11/5 10:53
+         */
+
+        return iUserService.addUser(name,phone,idCard,email);
+
     }
 }

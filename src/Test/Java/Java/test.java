@@ -1,6 +1,5 @@
 package Java;
 
-import Entity.Student;
 import com.zhuan.Service.IUserService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,6 @@ public class test {
 
     @org.junit.Test
     public void test() {
-        Student student=new Student();
-        student.setClassid(1);
-        for (Student student1 : service.selectByCondition(student)) {
-            System.out.println(student1.getName());
-        }
+
     }
 }

@@ -1,21 +1,13 @@
 package com.zhuan.Service;
 
-import Entity.Student;
+import com.zhuan.Pojo.Result;
+import com.zhuan.Pojo.User;
 
 import java.util.List;
 
 public interface IUserService {
-    int deleteByPrimaryKey(byte[] uid);
 
-    int insert(Student record);
+    List<User> selectAll(int page , int rows);
 
-    int insertSelective(Student record);
-
-    Student selectByPrimaryKey(byte[] uid);
-
-    List<Student> selectByCondition(Student record);
-
-    int updateByPrimaryKeySelective(Student record);
-
-    int updateByPrimaryKey(Student record);
+    Result addUser(String name,String phone,String idCard, String email);
 }
