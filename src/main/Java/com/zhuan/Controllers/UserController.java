@@ -1,7 +1,7 @@
 package com.zhuan.Controllers;
 
+import com.zhuan.Pojo.Infor;
 import com.zhuan.Pojo.Result;
-import com.zhuan.Pojo.User;
 import com.zhuan.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +20,9 @@ public class UserController {
     private IUserService iUserService;
 
     @RequestMapping(value = "/GetUserList.do")
-    public List<User> GetUserList(
-            @RequestParam(value = "page",required = false, defaultValue = "1") int page,
-            @RequestParam(value = "rows", required = false, defaultValue = "20") int rows) {
+    public Infor GetUserList(
+            @RequestParam(value = "page",required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", required = false, defaultValue = "20") Integer rows) {
             /**
              *
              * 功能描述: 查询用户列表

@@ -1,5 +1,9 @@
 package com.zhuan.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zhuan.Pojo.Infor;
+import com.zhuan.Pojo.Page;
 import com.zhuan.Pojo.Result;
 import com.zhuan.Pojo.User;
 import com.zhuan.Dao.UserMapper;
@@ -15,7 +19,7 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public List<User> selectAll(int page, int rows) {
+    public Infor selectAll(Integer page, Integer rows) {
         /**
          *
          * 功能描述: 
@@ -25,17 +29,41 @@ public class UserServiceImpl implements IUserService {
          * @auther: zhuan
          * @date: 2018/11/3 18:11
          */
+
+       // Infor infor = new Infor();
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        PageHelper.startPage(page, rows, true);
+
         int startNum = (page-1)*rows;
 
         int endNum = page*rows;
 
-        HashMap<String, String> map = new HashMap<>();
+        map.put("startNum",startNum);
 
-        map.put("startNum", String.valueOf(startNum));
+        map.put("endNum",endNum);
+        try{
+            List<User> userList = userMapper.selectAll();  //map
 
-        map.put("endNum", String.valueOf(endNum));
+            //用PageInfo对结果进行包装
+            PageInfo pageInfo= new PageInfo(userList);
 
-        return userMapper.selectAll(map);
+           // infor.setAll(userList,pageInfo,"");
+
+            Infor infor = new Infor(userList,pageInfo,"");
+
+            return infor;
+
+        }catch (Exception e){
+            Infor infor = new Infor();
+
+            infor.getResult().fail(e==null?"":e.toString());
+
+            return infor;
+        }
+
+
     }
 
     @Override
@@ -66,16 +94,13 @@ public class UserServiceImpl implements IUserService {
             int userid = user.getId();//获取人员id
 
             if(resultnum == 1){
-                result.setFlag(1);
-                result.setMsg("成功，id:"+userid);
+                result.success("成功，id:"+userid);
 
             }else{
-                result.setFlag(0);
-                result.setMsg("失败");
+                result.fail("");
             }
         }catch (Exception e){
-            result.setFlag(0);
-            result.setMsg(e.toString());
+            result.fail(e.toString());
         }
         return  result;
     }

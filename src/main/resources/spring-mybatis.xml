@@ -52,15 +52,15 @@
         <!-- 配置mybatis分页插件 注意其他配置 -->
         <property name="plugins">
             <array>
-                <bean class="com.github.pagehelper.PageHelper">
+                <bean class="com.github.pagehelper.PageInterceptor">
                     <property name="properties">
                         <!--使用下面的方式配置参数，一行配置一个 -->
                         <value>
-                            helperDialect=mysql
+                            helperDialect=MySQL
                             reasonable=true
-                            supportMethodsArguments=true
-                            params=count=countSql
-                            autoRuntimeDialect=true
+                            <!--supportMethodsArguments=true-->
+                            <!--params=count=countSql-->
+                            <!--autoRuntimeDialect=true-->
                         </value>
                     </property>
                 </bean>
@@ -70,7 +70,7 @@
     <!-- 配置mybatis mapper接口 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.zhuan.Dao"/>
-        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
     <!-- 配置事务管理器 -->

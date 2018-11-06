@@ -12,11 +12,10 @@
     <sql id="Base_Column_List">
         id, Name, Phone, IdCard, Email,CreationTime
     </sql>
-    <select id="selectAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from user
-        limit  ${startNum},${endNum}
+       <include refid="Base_Column_List"></include>
+         from user
     </select>
 
     <insert id="addUser"
